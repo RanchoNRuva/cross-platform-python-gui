@@ -1,22 +1,36 @@
-# this is needed for supporting Windows 10 with OpenGL < v2.0
-# Example: VirtualBox w/ OpenGL v1.1
-import platform, os
-if platform.system() == 'Windows':
-    os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
-
 import kivy
-#kivy.require('1.0.6') # replace with your current kivy version !
-
 from kivy.app import App
 from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
 
-class MyApp(App):
-
+class MainApp(App):
     def build(self):
-        return Label(text='Hello world!')
+        self.screen = GridLayout(cols=2)
+        self.screen.add_widget(Label(text='Enter smoke temperature'))
+        self.temp = TextInput()
+        self.screen.add_widget(self.temp)
+        self.submit = Button(text="Submit")
+        self.submit.bind(on_press=self.confirm)
+        self.screen.add_widget(self.submit)
+        self.output = Label()
+        self.screen.add_widget(self.output)
+        return self.screen
+
+    def confirm(self, instance):
+        print(int(self.temp.text))
+        smoketemp = 0
+        smoketemp = int(self.temp.text)
+        adjustedtemp = smoketemp * 1.28
+        if int(adjustedtemp) <= 355:
+            self.output.text = "1 pod needs to be deployed."
+        elif int(adjustedtemp) > 355 and int(adjustedtemp) <= 375:
+            self.output.text = "2 pods need to be deployed."
+        elif int(adjustedtemp) > 375:
+            self.output.text = "3 pods needs to be deployed."
+    
+    
 
 
-if __name__ == '__main__':
-    MyApp().run()
-
-
+MainApp().run()
