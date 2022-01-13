@@ -24,11 +24,11 @@ class MainApp(App):
         smoketemp = int(self.temp.text)
         adjustedtemp = smoketemp * 1.28
         if int(adjustedtemp) <= 355:
-            self.output.text = "1 pod needs to be deployed."
+            self.output.text = "1 chamber needs to be deployed."
         elif int(adjustedtemp) > 355 and int(adjustedtemp) <= 375:
-            self.output.text = "2 pods need to be deployed."
+            self.output.text = "2 chambers need to be deployed."
         elif int(adjustedtemp) > 375:
-            self.output.text = "3 pods needs to be deployed."
+            self.output.text = "3 chambers needs to be deployed."
     
     
 
